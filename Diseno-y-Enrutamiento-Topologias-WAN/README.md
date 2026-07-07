@@ -49,6 +49,7 @@ access-list 10 deny 192.168.3.0 0.0.0.255
 access-list 10 permit any
 router rip
  distribute-list 10 out Serial0/0/0
+```
 
 Nota técnica de auditoría: Durante el despliegue en el simulador Packet Tracer, el comando distribute-list devuelve una alerta de entrada inválida. Esto se documenta como una limitación conocida de software del simulador, validando que la sintaxis es rigurosamente idéntica y correcta para sistemas operativos Cisco IOS reales en entornos de producción físicos.
 
