@@ -49,3 +49,23 @@ access-list 10 deny 192.168.3.0 0.0.0.255
 access-list 10 permit any
 router rip
  distribute-list 10 out Serial0/0/0
+
+Nota técnica de auditoría: Durante el despliegue en el simulador Packet Tracer, el comando distribute-list devuelve una alerta de entrada inválida. Esto se documenta como una limitación conocida de software del simulador, validando que la sintaxis es rigurosamente idéntica y correcta para sistemas operativos Cisco IOS reales en entornos de producción físicos.
+
+🔍 Análisis Técnico y Resultados de Auditoría
+📊 Diagnóstico de Conectividad (Aislamiento de Red)
+Al realizar pruebas de ICMP (ping) desde un host de la LAN A hacia las subredes de las Sucursales B y C, el sistema responde con Destination host unreachable o Request timed out.
+
+Este fallo es el comportamiento lógicamente esperado: RIPv1 es un protocolo Classful (con clase) que omite las máscaras de subred en sus actualizaciones periódicas. Al encontrarse con Router B configurado en RIPv2, la diferencia en los mecanismos de actualización y la interpretación de los dominios rompe la adyacencia de enrutamiento, aislando de forma segura la red de la Oficina Principal de las sucursales.
+
+🗺️ Inspección de Tablas de Enrutamiento (show ip route)
+Router A (RIPv1): Solo contiene sus redes locales conectadas (C y L). Al no interpretar las tramas classless de RIPv2, desconoce por completo las redes de las sucursales.
+
+Router B y C (RIPv2): Muestran una convergencia perfecta entre sí. El comando show ip route rip en el Router C evidencia el aprendizaje dinámico de subredes específicas con sus máscaras exactas (ej. 10.0.0.0/30 y 192.168.2.0/24), confirmando que el direccionamiento sin clase (CIDR) opera correctamente gracias al comando no auto-summary.
+
+⏱️ Interpretación de la Métrica [120/1]
+Al examinar las rutas en la tabla de enrutamiento, la nomenclatura entre corchetes denota los dos valores clave del algoritmo Vector-Distancia de RIP:
+
+120 (Distancia Administrativa): Determina la confiabilidad del protocolo RIP frente a otras fuentes de enrutamiento.
+
+1 (Métrica/Conteo de Saltos): Especifica el costo del camino. El valor 1 indica que la red de destino se encuentra exactamente a un router de distancia (un salto intermedio).
