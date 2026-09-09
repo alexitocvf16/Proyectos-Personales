@@ -23,4 +23,6 @@ services:
       - SECRET_ENCRYPTION_KEY=${SECRET_KEY}
     ports:
       - '7575:7575'
-Variables de EntornoLa clave de cifrado ${SECRET_KEY} se inyecta de forma segura a través del apartado Environment variables de Portainer. Esta clave se genera previamente desde una terminal Linux mediante el comando:  Bashopenssl rand -hex 32
+
+
+Variables de Entorno: La clave de cifrado ${SECRET_KEY} se inyecta de forma segura a través del apartado Environment variables de Portainer. Esta clave se genera previamente desde una terminal Linux mediante el comando:  Bashopenssl rand -hex 32
