@@ -3,7 +3,7 @@
 Transformación de una Raspberry Pi 5 en un servidor NAS utilizando OpenMediaVault (OMV) y almacenamiento sólido (SSD) externo.
 
 ## 🚀 Requisitos Previos y Limpieza del Sistema
-Para garantizar una instalación limpia sin conflictos, se elimina el entorno gráfico del sistema operativo base[cite: 11].
+Para garantizar una instalación limpia sin conflictos, se elimina el entorno gráfico del sistema operativo base.
 1. **Deshabilitar el inicio gráfico:** `sudo systemctl set-default multi-user.target`.
 2. **Purgar paquetes visuales:** Se elimina el servidor gráfico (X11) y el gestor de inicio de sesión (`xserver-xorg lightdm raspberrypi-ui-mods`).
 3. **Conexión de Hardware:** El SSD (ej. SanDisk de 1TB) se conecta estrictamente a los puertos USB 3.0 (color azul) para evitar cuellos de botella en las transferencias de red.
